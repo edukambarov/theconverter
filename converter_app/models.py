@@ -102,9 +102,9 @@ class WomenTrousers(models.Model):
 
 class MenShirt(models.Model):
     # category = models.ForeignKey(Category)
-    rus_eur = models.CharField(max_length=20, blank=True)
-    uk_usa = models.CharField(max_length=20, blank=True)
-    inter = models.CharField(max_length=20, blank=True)
+    rus_eur = models.CharField(max_length=20, blank=True, verbose_name='Россия/Европа')
+    uk_usa = models.CharField(max_length=20, blank=True, verbose_name='США/Великобритания')
+    inter = models.CharField(max_length=20, blank=True, verbose_name='Международный')
 
     class Meta:
         verbose_name = "Мужские рубашки"
