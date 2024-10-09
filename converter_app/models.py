@@ -1,7 +1,15 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from users.models import User
 
+class ConvertionTracker(models.Model):
+    person = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.CharField(max_length=50, blank=True)
+    input_measure = models.CharField(max_length=50, blank=True)
+    input_size = models.CharField(max_length=50, blank=True)
+    output_measure = models.CharField(max_length=50, blank=True)
+    output_size = models.CharField(max_length=50, blank=True)
 
 
 
@@ -12,7 +20,7 @@ class MenShoes(models.Model):
     uk = models.CharField(max_length=20, blank=True, verbose_name='Великобритания')
     usa = models.CharField(max_length=20, blank=True, verbose_name='США')
     jap = models.CharField(max_length=20, blank=True, verbose_name='Япония')
-    cm = models.CharField(max_length=20, blank=True, verbose_name='Длина стопы (см')
+    cm = models.CharField(max_length=20, blank=True, verbose_name='Длина стопы (см)')
 
     class Meta:
         verbose_name = "Мужская обувь"

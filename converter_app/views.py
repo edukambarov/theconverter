@@ -1,18 +1,26 @@
 from django.apps import apps
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views import View
+
 from .models import *
 from .forms import SelectCategoryForm, MenShoesForm, WomenShoesForm, WomenTShirtForm, MenTShirtForm, MenTrousersForm, \
     WomenTrousersForm, MenShirtForm, WomenDressBlouseForm
 from users.models import User
 
 
-def home(request):
-    context = {'message': 'Привет, это конвертер размеров'}
-    return render(request, "home.html", context=context)
+def index(request):
+    return render(request, 'home.html')
+
+@login_required
+def show_searches(request):
+    your_searches = ConvertionTracker.objects.filter(person=request.user).order_by('-id')[:3]
+    data = {'searches': your_searches}
+    return render(request, 'profile.html', context=data)
 
 @login_required
 def select_category(request):
+
     submitbutton = request.POST.get("submit")
     chosen_category = ''
     chosen_category_title = ''
@@ -31,6 +39,7 @@ def select_category(request):
 @login_required
 def men_shoes(request):
     submitbutton = request.POST.get("submit")
+    person = request.user
     input_measure = ''
     input_size = ''
     output_measure = ''
@@ -68,6 +77,17 @@ def men_shoes(request):
             output_size = answer_item.eur
         else:
             output_size = answer_item.cm
+        # Создаём объект трекера и сохраняем его
+        new_search = ConvertionTracker(
+            person=person,
+            category=answer_item.__class__._meta.verbose_name.title(),
+            input_measure=[x[1] for x in list(form.fields['input_measure'].choices)
+                                 if x[0] == input_measure][0],
+            input_size=input_size,
+            output_measure=[x[1] for x in list(form.fields['output_measure'].choices)
+                                 if x[0] == output_measure][0],
+            output_size=output_size)
+        new_search.save()
     context = {'form': form,
                'submitbutton': submitbutton,
                'output_measure': output_measure,
@@ -78,6 +98,7 @@ def men_shoes(request):
 @login_required
 def women_shoes(request):
     submitbutton = request.POST.get("submit")
+    person = request.user
     input_measure = ''
     input_size = ''
     output_measure = ''
@@ -116,6 +137,17 @@ def women_shoes(request):
             output_size = answer_item.eur
         else:
             output_size = answer_item.cm
+        # Создаём объект трекера и сохраняем его
+        new_search = ConvertionTracker(
+            person=person,
+            category=answer_item.__class__._meta.verbose_name.title(),
+            input_measure=[x[1] for x in list(form.fields['input_measure'].choices)
+                           if x[0] == input_measure][0],
+            input_size=input_size,
+            output_measure=[x[1] for x in list(form.fields['output_measure'].choices)
+                            if x[0] == output_measure][0],
+            output_size=output_size)
+        new_search.save()
     context = {'form': form,
                'submitbutton': submitbutton,
                'output_measure': output_measure,
@@ -126,6 +158,7 @@ def women_shoes(request):
 @login_required
 def women_t_shirt(request):
     submitbutton = request.POST.get("submit")
+    person = request.user
     input_measure = ''
     input_size = ''
     output_measure = ''
@@ -160,6 +193,17 @@ def women_t_shirt(request):
             output_size = answer_item.eur
         else:
             output_size = answer_item.height_cm
+        # Создаём объект трекера и сохраняем его
+        new_search = ConvertionTracker(
+            person=person,
+            category=answer_item.__class__._meta.verbose_name.title(),
+            input_measure=[x[1] for x in list(form.fields['input_measure'].choices)
+                           if x[0] == input_measure][0],
+            input_size=input_size,
+            output_measure=[x[1] for x in list(form.fields['output_measure'].choices)
+                            if x[0] == output_measure][0],
+            output_size=output_size)
+        new_search.save()
     context = {'form': form,
                'submitbutton': submitbutton,
                'output_measure': output_measure,
@@ -170,6 +214,7 @@ def women_t_shirt(request):
 @login_required
 def men_t_shirt(request):
     submitbutton = request.POST.get("submit")
+    person = request.user
     input_measure = ''
     input_size = ''
     output_measure = ''
@@ -204,6 +249,17 @@ def men_t_shirt(request):
             output_size = answer_item.eur
         else:
             output_size = answer_item.height_cm
+        # Создаём объект трекера и сохраняем его
+        new_search = ConvertionTracker(
+            person=person,
+            category=answer_item.__class__._meta.verbose_name.title(),
+            input_measure=[x[1] for x in list(form.fields['input_measure'].choices)
+                           if x[0] == input_measure][0],
+            input_size=input_size,
+            output_measure=[x[1] for x in list(form.fields['output_measure'].choices)
+                            if x[0] == output_measure][0],
+            output_size=output_size)
+        new_search.save()
     context = {'form': form,
                'submitbutton': submitbutton,
                'output_measure': output_measure,
@@ -214,6 +270,7 @@ def men_t_shirt(request):
 @login_required
 def men_trousers(request):
     submitbutton = request.POST.get("submit")
+    person = request.user
     input_measure = ''
     input_size = ''
     output_measure = ''
@@ -256,6 +313,17 @@ def men_trousers(request):
             output_size = answer_item.waist_cm
         else:
             output_size = answer_item.jeans_waist
+        # Создаём объект трекера и сохраняем его
+        new_search = ConvertionTracker(
+            person=person,
+            category=answer_item.__class__._meta.verbose_name.title(),
+            input_measure=[x[1] for x in list(form.fields['input_measure'].choices)
+                           if x[0] == input_measure][0],
+            input_size=input_size,
+            output_measure=[x[1] for x in list(form.fields['output_measure'].choices)
+                            if x[0] == output_measure][0],
+            output_size=output_size)
+        new_search.save()
     context = {'form': form,
                 'submitbutton': submitbutton,
                 'output_measure': output_measure,
@@ -264,9 +332,11 @@ def men_trousers(request):
     return render(request, "result.html", context)
 
 
+
 @login_required
 def women_trousers(request):
     submitbutton = request.POST.get("submit")
+    person = request.user
     input_measure = ''
     input_size = ''
     output_measure = ''
@@ -321,6 +391,17 @@ def women_trousers(request):
             output_size = answer_item.hips_cm
         else:
             output_size = answer_item.jeans_waist
+        # Создаём объект трекера и сохраняем его
+        new_search = ConvertionTracker(
+            person=person,
+            category=answer_item.__class__._meta.verbose_name.title(),
+            input_measure=[x[1] for x in list(form.fields['input_measure'].choices)
+                           if x[0] == input_measure][0],
+            input_size=input_size,
+            output_measure=[x[1] for x in list(form.fields['output_measure'].choices)
+                            if x[0] == output_measure][0],
+            output_size=output_size)
+        new_search.save()
     context = {'form': form,
                 'submitbutton': submitbutton,
                 'output_measure': output_measure,
@@ -331,6 +412,7 @@ def women_trousers(request):
 @login_required
 def men_shirt(request):
     submitbutton = request.POST.get("submit")
+    person = request.user
     input_measure = ''
     input_size = ''
     output_measure = ''
@@ -357,6 +439,17 @@ def men_shirt(request):
             output_size = answer_item.uk_usa
         else:
             output_size = answer_item.inter
+        # Создаём объект трекера и сохраняем его
+        new_search = ConvertionTracker(
+            person=person,
+            category=answer_item.__class__._meta.verbose_name.title(),
+            input_measure=[x[1] for x in list(form.fields['input_measure'].choices)
+                           if x[0] == input_measure][0],
+            input_size=input_size,
+            output_measure=[x[1] for x in list(form.fields['output_measure'].choices)
+                            if x[0] == output_measure][0],
+            output_size=output_size)
+        new_search.save()
     context = {'form': form,
                 'submitbutton': submitbutton,
                 'output_measure': output_measure,
@@ -367,6 +460,7 @@ def men_shirt(request):
 @login_required
 def women_dress_blouse(request):
     submitbutton = request.POST.get("submit")
+    person = request.user
     input_measure = ''
     input_size = ''
     output_measure = ''
@@ -409,6 +503,17 @@ def women_dress_blouse(request):
             output_size = answer_item.jap
         elif output_measure == 'fra':
             output_size = answer_item.eur
+        # Создаём объект трекера и сохраняем его
+        new_search = ConvertionTracker(
+            person=person,
+            category=answer_item.__class__._meta.verbose_name.title(),
+            input_measure=[x[1] for x in list(form.fields['input_measure'].choices)
+                           if x[0] == input_measure][0],
+            input_size=input_size,
+            output_measure=[x[1] for x in list(form.fields['output_measure'].choices)
+                            if x[0] == output_measure][0],
+            output_size=output_size)
+        new_search.save()
     context = {'form': form,
                 'submitbutton': submitbutton,
                 'output_measure': output_measure,

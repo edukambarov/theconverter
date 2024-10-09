@@ -10,7 +10,7 @@ from .models import *
 
 class SelectCategoryForm(forms.Form):
     app_models = apps.get_app_config('converter_app').get_models()
-    MODELS = [(model.__name__, model._meta.verbose_name.title()) for model in app_models]
+    MODELS = [(model.__name__, model._meta.verbose_name.title()) for model in app_models if not model.__name__ =='ConvertionTracker']
 
     chosen_category = forms.ChoiceField(widget=RadioSelect,
                                         choices=MODELS,

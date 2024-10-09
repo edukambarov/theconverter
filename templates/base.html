@@ -8,15 +8,20 @@
     <title>Size Converter</title>
 </head>
 <body class="container">
+    {% if user.is_authenticated %}
     <ul class="list-group">
+
         <li class="list-group-item">
-            {% if user.is_authenticated %}
+
             Добро пожаловать, {{ user.username|title}}!
-            {% endif %}
+
         </li>
         <li class="list-group-item">
-            <a href="{% url 'home' %}" class="btn btn-info btn-sm mt-1 mb-1">На главную</a>
+
+            <a href="{% url 'profile' %}" class="btn btn-info btn-sm mt-1 mb-1">На главную</a>
+
         </li>
+        {% endif %}
     </ul>
 {% block content %}
 {% endblock %}
