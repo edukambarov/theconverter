@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+                <legend class="border-bottom mb-4">Конвертация данных</legend>
+                {{ form.as_div }}
+                <input type="submit" name="submit" value="submit"></input>
+        </form>
+    </div>
+    <div class="card mb-3">
+        <div class="card-body">
+            {% if submitbutton == "submit" %}
+                <h5 class="card-title">Размер, который вы ищете ({{ output_measure }}): {{ output_size }}</h5>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-body">
+                <a href="{% url 'select_category' %}" class="btn btn-outline-info">Начать новый поиск</a>
+        </div>
+    </div>
+{% endblock %}
