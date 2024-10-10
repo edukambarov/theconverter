@@ -273,7 +273,7 @@ class MenShirtForm(forms.Form):
         cleaned_data = super(MenShirtForm, self).clean()
         input_measure = cleaned_data.get('input_measure')
         if input_measure == 'rus_eur':
-            input_size_choices = [(x, x) for x in list(MenShirt.objects.all().values_list('rus', flat=True))]
+            input_size_choices = [(x, x) for x in list(MenShirt.objects.all().values_list('rus_eur', flat=True))]
         elif input_measure == 'uk_usa':
             input_size_choices = [(x, x) for x in list(MenShirt.objects.all().values_list('uk_usa', flat=True))]
         elif input_measure == 'inter':
