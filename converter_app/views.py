@@ -474,35 +474,37 @@ def women_dress_blouse(request):
         input_size = form.cleaned_data['input_size']
 
         # Фильтруем объекты классы из БД, находим нужную строку
+
         if input_measure == 'rus':
             answer_item = WomenDressBlouse.objects.filter(rus=input_size).first()
-        elif input_measure == 'inter':
-            answer_item = WomenDressBlouse.objects.filter(inter=input_size).first()
-        elif input_measure == 'usa':
-            answer_item = WomenDressBlouse.objects.filter(usa=input_size).first()
         elif input_measure == 'uk':
-             answer_item = WomenDressBlouse.objects.filter(uk=input_size).first()
-        elif input_measure == 'jap':
-            answer_item = WomenDressBlouse.objects.filter(jap=input_size).first()
+            answer_item = WomenDressBlouse.objects.filter(uk=input_size).first()
+        elif input_measure == 'ger':
+            answer_item = WomenDressBlouse.objects.filter(ger=input_size).first()
         elif input_measure == 'ita':
             answer_item = WomenDressBlouse.objects.filter(ita=input_size).first()
         elif input_measure == 'fra':
             answer_item = WomenDressBlouse.objects.filter(fra=input_size).first()
+        elif input_measure == 'usa':
+            answer_item = WomenDressBlouse.objects.filter(usa=input_size).first()
+        else:
+            answer_item = WomenDressBlouse.objects.filter(inter=input_size).first()
+
         # Получаем искомый атрибут
         if output_measure == 'rus':
             output_size = answer_item.rus
-        elif output_measure == 'inter':
-            output_size = answer_item.inter
-        elif output_measure == 'usa':
-            output_size = answer_item.usa
         elif output_measure == 'uk':
             output_size = answer_item.uk
+        elif output_measure == 'ger':
+            output_size = answer_item.ger
         elif output_measure == 'ita':
             output_size = answer_item.ita
-        elif output_measure == 'jap':
-            output_size = answer_item.jap
         elif output_measure == 'fra':
-            output_size = answer_item.eur
+            output_size = answer_item.fra
+        elif output_measure == 'usa':
+            output_size = answer_item.usa
+        else:
+            output_size = answer_item.inter
         # Создаём объект трекера и сохраняем его
         new_search = ConvertionTracker(
             person=person,
