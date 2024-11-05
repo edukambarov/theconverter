@@ -308,7 +308,7 @@ def men_trousers(request):
         elif output_measure == 'ita':
             output_size = answer_item.ita
         elif output_measure == 'fra':
-            output_size = answer_item.eur
+            output_size = answer_item.fra
         elif output_measure == 'waist_cm':
             output_size = answer_item.waist_cm
         else:
