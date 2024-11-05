@@ -384,7 +384,7 @@ def women_trousers(request):
         elif output_measure == 'jap':
             output_size = answer_item.jap
         elif output_measure == 'fra':
-            output_size = answer_item.eur
+            output_size = answer_item.fra
         elif output_measure == 'waist_cm':
             output_size = answer_item.waist_cm
         elif output_measure == 'hips_cm':
