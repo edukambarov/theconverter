@@ -65,13 +65,7 @@ class MenTShirt(models.Model):
 
 
 class MenTrousers(models.Model):
-    # category = models.ForeignKey(Category)
-    rus = models.CharField(max_length=20, blank=True, verbose_name='Россия')
-    eur = models.CharField(max_length=20, blank=True, verbose_name='Европа')
-    uk_usa = models.CharField(max_length=20, blank=True, verbose_name='США/Великобритания')
-    inter = models.CharField(max_length=20, blank=True, verbose_name='Международный')
-    height_cm = models.CharField(max_length=20, blank=True, verbose_name='Рост (см)')
-
+    # category = models.ForeignKey(Category)   
     rus = models.CharField(max_length=20, blank=True, verbose_name='Россия')
     ita = models.CharField(max_length=20, blank=True, verbose_name='Италия')
     fra = models.CharField(max_length=20, blank=True, verbose_name='Франция')
